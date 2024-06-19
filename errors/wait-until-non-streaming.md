@@ -6,6 +6,14 @@ The [waitUntil](https://vercel.com/docs/functions/functions-api-reference#waitun
 
 When `waitUntil` is used in a [non-streaming function](https://vercel.com/docs/functions/streaming#non-streaming-functions), the behavior is limited and the function will delay the response until after the enqueued asynchronous tasks have been resolved.
 
+It's probably you're seeing this error even you are not using `waitUntil` directly. That's because you are using it indirectly from a dependency.
+
+Here is a list of dependencies that are using waitUntil as part of their implementation:
+
+- [`@vercel/otel`](https://github.com/vercel/otel)
+- [`@vercel/analytics`](https://github.com/vercel/analytics/tree/main/packages/web)
+- [sentry]
+
 ## How to Fix It
 
 To overcome the limitations of `waitUntil` with [non-streaming functions](https://vercel.com/docs/functions/streaming#non-streaming-functions), you should explicitly opt-in your functions to support streaming:
